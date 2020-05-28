@@ -1,25 +1,58 @@
 package com.atguigu.dataStructures;
 
-import java.util.concurrent.ThreadPoolExecutor;
+
+import java.util.Stack;
 
 public class HeroNodeDemo {
 
     public static void main(String[] args) {
 
-        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        SingleLinkedList singleLinkedList1 = new SingleLinkedList();
+        SingleLinkedList singleLinkedList2 = new SingleLinkedList();
 
-        System.out.println("原始数据：");
-        singleLinkedList.addOrder(new HeroNode(3,"吴用","智多星"));
-        singleLinkedList.addOrder(new HeroNode(1,"宋江","及时雨"));
-        singleLinkedList.addOrder(new HeroNode(4,"林冲","豹子头"));
-        singleLinkedList.addOrder(new HeroNode(2,"卢俊义","玉麒麟"));
+        System.out.println("原始数据1：");
+        singleLinkedList1.addOrder(new HeroNode(1,"吴用","智多星"));
+        singleLinkedList1.addOrder(new HeroNode(3,"宋江","及时雨"));
+        singleLinkedList1.addOrder(new HeroNode(5,"林冲","豹子头"));
+        singleLinkedList1.addOrder(new HeroNode(7,"卢俊义","玉麒麟"));
+        singleLinkedList1.printNode();
+
+        System.out.println("原始数据2：");
+        singleLinkedList2.addOrder(new HeroNode(2,"吴用","智多星"));
+        singleLinkedList2.addOrder(new HeroNode(4,"宋江","及时雨"));
+        singleLinkedList2.addOrder(new HeroNode(6,"林冲","豹子头"));
+        singleLinkedList2.addOrder(new HeroNode(8,"卢俊义","玉麒麟"));
+        singleLinkedList2.printNode();
+
+        System.out.println("合并原始数据：");
+
+        /*System.out.println("反转后的数据：");
+        SingleLinkedList.reverseNode(singleLinkedList.getNode());
 
         singleLinkedList.printNode();
 
-        System.out.println("修改后的数据：");
+        System.out.println("逆序打印的数据：");
+        SingleLinkedList.reversePrint(singleLinkedList.getNode());*/
+
+        //singleLinkedList.printNode();
+
+        /*System.out.println("修改后的数据：");
         singleLinkedList.updateNode(new HeroNode(2,"晁盖","晁天王"));
 
         singleLinkedList.printNode();
+
+        System.out.println("删除后的数据：");
+        singleLinkedList.del(3);
+//        singleLinkedList.del(2);
+//        singleLinkedList.del(1);
+//        singleLinkedList.del(4);
+
+        singleLinkedList.printNode();
+
+        System.out.println("链表中有效节点数量：" + SingleLinkedList.getLength(singleLinkedList.getNode()));
+
+        System.out.println("链表中的第K个节点" + SingleLinkedList.getReciprocal(singleLinkedList.getNode(),1));*/
+
     }
 
 }
@@ -28,6 +61,10 @@ public class HeroNodeDemo {
 class SingleLinkedList{
 
     private HeroNode node = new HeroNode(0,"",""); //链表的头部不能动，不存放具体数据
+
+    public HeroNode getNode() {
+        return node;
+    }
 
     //不考虑顺序的情况下添加数据
     public void add(HeroNode heroNode){
@@ -101,6 +138,155 @@ class SingleLinkedList{
         }
 
     }
+
+    //删除链表中的数据
+    public void del(int no){
+
+        HeroNode temp = node;
+        boolean flag = false;
+        while (true){
+            if (temp.next == null){
+                break;
+            }
+            if (temp.next.no == no){
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag){
+            temp.next = temp.next.next;
+        }else {
+            System.out.println("链表为空");
+        }
+
+    }
+
+    //判断链表中的有效节点数量
+    public static int getLength(HeroNode heroNode){
+
+        if (heroNode.next == null){
+            System.out.println("链表中没有数据");
+            return 0;
+        }
+        int length = 0; //统计链表中的有效节点
+        HeroNode temp = heroNode.next;
+        while (temp != null){
+            temp = temp.next;
+            length++;
+        }
+        return length;
+
+    }
+
+    //查找链表中倒数第K个节点
+    public static HeroNode getReciprocal(HeroNode heroNode,int index){
+
+        if (heroNode.next == null){
+            System.out.println("链表中没有数据");
+            return null;
+        }
+
+        int size = getLength(heroNode);  //统计链表的有效个数
+
+        if (index <=0 || index > size){
+            System.out.println("链表越界");
+            return null;
+        }
+
+        HeroNode temp = heroNode.next;
+        for (int i = 0; i < size - index; i++) {
+            temp = temp.next;
+        }
+        return temp;
+
+    }
+
+    //反转链表
+    public static void reverseNode(HeroNode heroNode){
+
+        if (heroNode.next == null || heroNode.next.next == null){
+            return;
+        }
+
+        HeroNode temp = heroNode.next;
+        HeroNode cur = null;  //用来记录当前节点的下个节点
+        HeroNode reverseNode = new HeroNode(0,"","");
+
+        while (temp != null){
+            cur = temp.next;
+            temp.next = reverseNode.next;
+            reverseNode.next = temp;
+            temp = cur;
+        }
+        heroNode.next = reverseNode.next;
+
+    }
+
+
+    //打印反转链表
+    public static void reversePrint(HeroNode heroNode){
+
+        if (heroNode.next == null){
+            return;
+        }
+
+        Stack<HeroNode> stack = new Stack<>(); //创建一个栈，栈的特点就是先进后出
+
+        HeroNode temp = heroNode.next;
+        while (temp != null){
+
+            stack.push(temp);
+            temp = temp.next;
+
+        }
+        while (stack.size() > 0){   //栈中的值被取出时，栈的长度就会变小
+            System.out.println(stack.pop());
+        }
+
+    }
+
+    //1 3 5 7
+    //2 4 6 8
+    public HeroNode mergeTwoNode(HeroNode heroNodeOne,HeroNode heroNodeTwo){
+
+        if (heroNodeOne.next == null || heroNodeTwo.next == null){
+            return null;
+        }
+
+        /*boolean flag1 = false;  //此方法有问题，问题在于break到c标记为的时候，node1不会重新循环
+        boolean flag2 = false;
+
+        while (node2 != null){
+            if (node2.next == null){
+                break;
+            }
+            c:while (node1 != null){
+                if (node1.next == null){
+                    break c;
+                }
+                if (node1.next.no > node2.no){
+                    flag1 = true;
+                    break c;
+                }
+                if (node1.no > node2.no){
+                    flag2 = true;
+                    break c;
+                }
+                node1 = node1.next;
+            }
+            if (flag1){
+                node2.next = node1.next;
+                node1.next = node2;
+            }else if (flag2){
+                node2.next = node1;
+            }
+            node2 = node2.next;
+        }*/
+
+        return node;
+    }
+
 
 
     //打印链表中的数据
