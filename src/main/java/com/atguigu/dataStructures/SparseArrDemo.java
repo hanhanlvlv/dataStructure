@@ -1,6 +1,6 @@
 package com.atguigu.dataStructures;
 
-public class sparseArrDemo {
+public class SparseArrDemo {
 
     public static void main(String[] args) {
 

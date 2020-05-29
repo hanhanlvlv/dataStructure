@@ -25,6 +25,9 @@ public class HeroNodeDemo {
         singleLinkedList2.printNode();
 
         System.out.println("合并原始数据：");
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        singleLinkedList.mergeTwoNode(singleLinkedList1.getNode(), singleLinkedList2.getNode());
+        singleLinkedList.printNode();
 
         /*System.out.println("反转后的数据：");
         SingleLinkedList.reverseNode(singleLinkedList.getNode());
@@ -252,6 +255,24 @@ class SingleLinkedList{
 
         if (heroNodeOne.next == null || heroNodeTwo.next == null){
             return null;
+        }
+
+        HeroNode heroNode1 = heroNodeOne.next;
+        HeroNode heroNode2 = heroNodeTwo.next;
+        HeroNode cur = null;
+
+        while (heroNode1 != null){
+            cur = heroNode1.next;
+            addOrder(heroNode1);
+            heroNode1 = cur;
+
+        }
+
+        while (heroNode2 != null){
+            cur = heroNode2.next;
+            addOrder(heroNode2);
+            heroNode2 = cur;
+
         }
 
         /*boolean flag1 = false;  //此方法有问题，问题在于break到c标记为的时候，node1不会重新循环
