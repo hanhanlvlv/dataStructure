@@ -4,7 +4,7 @@ public class CalculatorDemo {
 
     public static void main(String[] args) {
 
-        String expression = "4+2*6-2";
+        String expression = "3-2*6+2";
 
         StackArr2 numStack = new StackArr2(10);
         StackArr2 operStack = new StackArr2(10);
@@ -12,6 +12,7 @@ public class CalculatorDemo {
         //index扫描的位置，num1和num2表示获取到的一个数，oper运算符，res结果
         int index = 0,num1 = 0,num2 = 0,oper = 0,res = 0;
         char ch = ' ';
+        String keepNum = "";
 
         while (true){
 
@@ -33,7 +34,19 @@ public class CalculatorDemo {
                     operStack.push(ch);
                 }
             }else {
-                numStack.push(ch - 48);  //因为ACSII里面1是49
+
+                keepNum += ch;
+
+                if (index == expression.length() - 1){
+                    numStack.push(Integer.parseInt(keepNum));
+                }else {
+                    if (operStack.isOper(expression.substring(index + 1,index + 2).charAt(0))){
+                        numStack.push(Integer.parseInt(keepNum));
+                        keepNum = "";
+                    }
+                }
+
+                //numStack.push(ch - 48);  //因为ACSII里面1是49
             }
             index++;
             if (index >= expression.length()) break;
