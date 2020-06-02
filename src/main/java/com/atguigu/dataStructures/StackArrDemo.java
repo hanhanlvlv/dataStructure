@@ -48,23 +48,23 @@ public class StackArrDemo {
         stackLinked.add(new LinkedStack(4,"吴用"));
 
         System.out.println("原始数据：");
-        stackLinked.showLisi();
+        stackLinked.showList();
 
         LinkedStack linkedStack1 = stackLinked.get();
         System.out.println("获取第一条数据之后，剩余的数据：" + linkedStack1);
-        stackLinked.showLisi();
+        stackLinked.showList();
 
         LinkedStack linkedStack2 = stackLinked.get();
         System.out.println("再次获取数据之后，剩余的数据：" + linkedStack2);
-        stackLinked.showLisi();
+        stackLinked.showList();
 
         LinkedStack linkedStack3 = stackLinked.get();
         System.out.println("再次获取数据之后，剩余的数据：" + linkedStack3);
-        stackLinked.showLisi();
+        stackLinked.showList();
 
         LinkedStack linkedStack4 = stackLinked.get();
         System.out.println("再次获取数据之后，剩余的数据：" + linkedStack4);
-        stackLinked.showLisi();
+        stackLinked.showList();
 
     }
 
@@ -100,10 +100,10 @@ class StackLinked{
     }
 
 
-    public void showLisi(){
+    public void showList(){
 
         if (head.next == null){
-            System.out.println("链表维欧空");
+            System.out.println("链表为空");
             return;
         }
 
