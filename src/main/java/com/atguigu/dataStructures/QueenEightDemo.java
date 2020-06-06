@@ -1,6 +1,6 @@
 package com.atguigu.dataStructures;
 
-public class QueueEightDemo {
+public class QueenEightDemo {
 
 
     int max = 8;
@@ -13,7 +13,7 @@ public class QueueEightDemo {
 
     public static void main(String[] args) {
 
-        QueueEightDemo queueEightDemo = new QueueEightDemo();
+        QueenEightDemo queueEightDemo = new QueenEightDemo();
 
         queueEightDemo.check(0);
 
