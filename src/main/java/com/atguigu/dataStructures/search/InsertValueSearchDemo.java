@@ -1,4 +1,4 @@
-package com.atguigu.dataStructures;
+package com.atguigu.dataStructures.search;
 
 public class InsertValueSearchDemo {
 

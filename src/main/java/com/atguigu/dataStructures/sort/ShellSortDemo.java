@@ -1,4 +1,4 @@
-package com.atguigu.dataStructures;
+package com.atguigu.dataStructures.sort;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;

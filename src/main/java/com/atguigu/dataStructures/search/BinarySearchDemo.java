@@ -1,4 +1,4 @@
-package com.atguigu.dataStructures;
+package com.atguigu.dataStructures.search;
 
 import java.util.ArrayList;
 import java.util.List;
