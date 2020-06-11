@@ -1,9 +1,8 @@
-package com.atguigu.dataStructures;
-
-import java.util.concurrent.CopyOnWriteArrayList;
+package com.atguigu.dataStructures.tree;
 
 public class BinaryTreeDemo {
 
+    //二叉树查询删除
     public static void main(String[] args) {
 
         BinaryTree binaryTree = new BinaryTree();
@@ -29,7 +28,7 @@ public class BinaryTreeDemo {
 //        System.out.println("后序遍历");
 //        binaryTree.postOrder();
 
-        int id = 5;
+//        int id = 5;
 
 //        HerosNode resNode = binaryTree.preOrderSearch(id);
 //        if (resNode != null){
@@ -45,12 +44,18 @@ public class BinaryTreeDemo {
 //            System.out.println("没有找到" + id);
 //        }
 
-        HerosNode resNode = binaryTree.postOrderSearch(id);
-        if (resNode != null){
-            System.out.println("resNode=" + resNode);
-        }else {
-            System.out.println("没有找到" + id);
-        }
+//        HerosNode resNode = binaryTree.postOrderSearch(id);
+//        if (resNode != null){
+//            System.out.println("resNode=" + resNode);
+//        }else {
+//            System.out.println("没有找到" + id);
+//        }
+
+        System.out.println("删除前的数据");
+        binaryTree.preOrder();
+        binaryTree.delNode(3);
+        System.out.println("删除后的数据");
+        binaryTree.preOrder();
 
     }
 
@@ -112,6 +117,21 @@ class BinaryTree{
         }else {
             return null;
         }
+    }
+
+
+    public void delNode(int id){
+
+        if (root != null){
+            if (root.getId() == id){
+                root = null;
+            }else {
+                root.delNode(id);
+            }
+        }else {
+            System.out.println("空树不能删除");
+        }
+
     }
 
 
@@ -291,6 +311,40 @@ class HerosNode{
         }
 
         return resNode;
+
+    }
+
+
+    public void delNode(int id){
+
+        if (this.left != null && this.left.id == id){
+            this.left = null;
+            return;
+        }
+
+        if (this.right != null && this.right.id == id){
+            if (this.right.left != null){
+                if (this.right.right != null) {
+                    this.right.left.setRight(this.right.right);
+                }
+                this.setRight(this.right.left);
+                return;
+            }
+            if (this.right.right != null){
+                this.setRight(this.right.right);
+                return;
+            }
+            this.right= null;
+            return;
+        }
+
+        if (this.left != null){
+            this.left.delNode(id);
+        }
+
+        if (this.right != null){
+            this.right.delNode(id);
+        }
 
     }
 
