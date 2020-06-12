@@ -29,7 +29,7 @@ public class RadixSortDemo {
 
     }
 
-    //基数排序
+    //基数排序(空间换时间的一种算法)
     public static void radixSort(int[] arr){
 
         int max = arr[0];
