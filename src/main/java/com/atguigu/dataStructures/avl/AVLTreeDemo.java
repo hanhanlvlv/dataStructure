@@ -1,40 +1,41 @@
-package com.atguigu.dataStructures.tree;
+package com.atguigu.dataStructures.avl;
 
-public class BinarySortTreeDemo {
+public class AVLTreeDemo {
 
     public static void main(String[] args) {
 
-        int[] arr = {7,3,10,12,5,1,9,2};
+        int[] arr = {10,11,7,6,8,9};
 
-        BinarySortTree binarySortTree = new BinarySortTree();
+        AVLTree avlTree = new AVLTree();
 
         for (int i = 0; i < arr.length; i++) {
-            binarySortTree.add(new Nodes(arr[i]));
+            avlTree.add(new Nodes(arr[i]));
         }
 
         System.out.println("中序遍历");
-        binarySortTree.infixOrder();
+        avlTree.infixOrder();
 
-        binarySortTree.del(2);
-        binarySortTree.del(5);
-        binarySortTree.del(9);
-        binarySortTree.del(12);
-        binarySortTree.del(3);
-        binarySortTree.del(7);
-        binarySortTree.del(10);
-        binarySortTree.del(1);
-
-        System.out.println("删除后的中序遍历");
-        binarySortTree.infixOrder();
+        System.out.println("树的高度：" + avlTree.getRoot().height());
+        System.out.println("树的左子树高度：" + avlTree.getRoot().leftHeight());
+        System.out.println("树的右子树高度：" + avlTree.getRoot().rightHeight());
+        System.out.println("根结点：" + avlTree.getRoot());
 
     }
 
 }
 
 
-class BinarySortTree{
+class AVLTree{
 
     private Nodes root;
+
+    public Nodes getRoot() {
+        return root;
+    }
+
+    public void setRoot(Nodes root) {
+        this.root = root;
+    }
 
     public void add(Nodes nodes){
 
@@ -124,13 +125,13 @@ class BinarySortTree{
                     parent.right = null;
                 }
 
-            //这说明删除的是一个非叶子结点，而且有左结点和右子结点
+                //这说明删除的是一个非叶子结点，而且有左结点和右子结点
             } else if (targetNode.left != null && targetNode.right != null){
 
                 int minVal = delRightTreeMin(targetNode.right);
                 targetNode.value = minVal;
 
-            //这说明删除的是一个只有一个叶子结点的非叶子结点
+                //这说明删除的是一个只有一个叶子结点的非叶子结点
             } else {
 
                 if (targetNode.left != null){
@@ -179,6 +180,52 @@ class Nodes{
                 '}';
     }
 
+    public int leftHeight(){
+        if (left == null){
+            return 0;
+        }
+        return left.height();
+    }
+
+    public int rightHeight(){
+        if (right == null){
+            return 0;
+        }
+        return right.height();
+    }
+
+    public int height(){
+        return Math.max(left == null ? 0 : left.height(),right == null ? 0 : right.height()) + 1;
+    }
+
+    public void leftRotate(){
+
+        //创建新的结点，以当前根结点的值
+        Nodes newNodes = new Nodes(value);
+        //把新的结点的左子树设置成当前结点的左子树
+        newNodes.left = left;
+        //把新的结点的右子树设置成当前结点的右子树的左子树
+        newNodes.right = right.left;
+        //把当前结点的值替换成右子结点的值
+        value = right.value;
+        //把当前结点的右子树设置成当前结点右子树的右子树
+        right = right.right;
+        //把当前结点的左子树(左子结点)设置成新的结点
+        left = newNodes;
+
+    }
+
+    public void rightRotate(){
+
+        Nodes newNodes = new Nodes(value);
+        newNodes.right = right;
+        newNodes.left = left.right;
+        value = left.value;
+        left = left.left;
+        right = newNodes;
+
+    }
+
     public Nodes(int value) {
         this.value = value;
     }
@@ -201,6 +248,33 @@ class Nodes{
             } else {
                 this.right.add(nodes);
             }
+        }
+
+        if (rightHeight() - leftHeight() > 1){
+
+            //如果它的右子树的左子树的高度大于它的右子树的右子树的高度
+            if (right != null && right.leftHeight() > right.rightHeight()){
+                //先对右子结点进行右旋转
+                right.rightRotate();
+                //然后在对当前结点进行左旋转
+                leftRotate();
+            } else {
+                leftRotate();
+            }
+
+            return;
+
+        }
+
+        if (leftHeight() - rightHeight() > 1){
+
+            if (left != null && left.rightHeight() > left.leftHeight()) {
+                left.leftRotate();
+                rightRotate();
+            } else {
+                rightRotate();
+            }
+
         }
 
     }
