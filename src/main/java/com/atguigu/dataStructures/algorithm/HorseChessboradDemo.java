@@ -15,6 +15,7 @@ public class HorseChessboradDemo {
 
     private static boolean finished;
 
+    //马踏棋盘算法（也叫骑士周游算法）
     public static void main(String[] args) {
 
         X = 6;
